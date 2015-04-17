@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Générateur de factures</title>
+
+
+		<!-- Angulars Material CSS now available via Google CDN; version 0.8 used here -->
+    	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body ng-app="invoice" ng-controller="invoiceCtrl">
+		<md-toolbar class="md-primary">
+		    <div class="md-toolbar-tools">
+		      <h2 class="md-flex">Générateur de factures</h2>
+		    </div>
+		</md-toolbar>
+		<div class="container-fluid">
+			<div class="col-lg-3">
+				<div class="col-lg-12">
+					<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
+						<h2>Créancier</h2>
+						<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+						    <md-input-container class="col-xs-12">
+						    	<label>Dénomination</label>
+						    	<input ng-model="user.title">
+						    </md-input-container>
+					  	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					 		<md-input-container flex class="col-xs-12">
+					        	<label>Adresse</label>
+					        	<input ng-model="user.address">
+					      	</md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					        <md-input-container flex class="col-xs-12">
+					         	<label>Ville</label>
+					         	<input ng-model="user.postalCode">
+					        </md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					      	<div layout layout-sm="column">
+					        <md-input-container flex>
+					          	<label>Code postal</label>
+					         	<input ng-model="user.city">
+					        </md-input-container>
+					        <md-input-container flex>
+					         	<label>Pays</label>
+					         	<input ng-model="user.state">
+					        </md-input-container>
+					        </div>
+					 	</md-content>
+					</md-whiteframe>
+				</div>
+				<div class="col-lg-12">
+					<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
+						<h2>Destinataire</h2>
+						<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+						    <md-input-container class="col-xs-12">
+						    	<label>Dénomination</label>
+						    	<input ng-model="user.title">
+						    </md-input-container>
+					  	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					 		<md-input-container flex class="col-xs-12">
+					        	<label>Adresse</label>
+					        	<input ng-model="user.address">
+					      	</md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					        <md-input-container flex class="col-xs-12">
+					         	<label>Ville</label>
+					         	<input ng-model="user.postalCode">
+					        </md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					      	<div layout layout-sm="column">
+					        <md-input-container flex>
+					          	<label>Code postal</label>
+					         	<input ng-model="user.city">
+					        </md-input-container>
+					        <md-input-container flex>
+					         	<label>Pays</label>
+					         	<input ng-model="user.state">
+					        </md-input-container>
+					        </div>
+					 	</md-content>
+					</md-whiteframe>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati maiores, dolore veritatis autem suscipit id aliquam aut, doloribus voluptatem nisi quo voluptatum. Debitis impedit error aliquam laborum dolorem rerum voluptate.</p>
+				</md-whiteframe>
+			</div>
+			<div class="col-lg-3">
+				<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
+					<h2>Options</h2>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-4">
+					        <span class="md-body-1">TVA (%)</span>
+					    </div>
+					    <div class="col-xs-5">
+					    	<md-slider flex min="0" max="25" ng-model="opt.tva" aria-label="blue" id="blue-slider" class="md-primary"></md-slider>
+					    </div>
+				      	<div flex layout class="col-xs-3">
+				        	<input type="number" ng-model="opt.tva" aria-label="blue" aria-controls="blue-slider">
+				      	</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+				    	<div class="col-xs-6">
+				    		Type de document :
+				    	</div>
+				    	<div class="col-xs-3">
+				    		<md-switch ng-model="opt.type" aria-label="Switch 1" class="md-primary"></md-switch>
+				    	</div>
+						<div class="col-xs-3">
+							{{ opt.type == true ? 'Facture' : 'Devis' }}
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12 mb">
+						<div class="col-xs-6">
+							Pièce numero # :
+						</div>
+						<div class="col-xs-6">
+							<md-input-container flex>
+				          		<label>Numero</label>
+				         		<input type="number" ng-model="opt.number">
+				        	</md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-5">
+							Date de début
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Début</label>
+					        	<input type="date" ng-change="debug()" ng-model="opt.startDate">
+					        </md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-5">
+							Date d'échéance
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Fin</label>
+					        	<input type="date" ng-model="opt.endDate">
+					        </md-input-container>
+						</div>
+					</div>
+
+					<div layout="row" layout-align="center center" class="col-xs-12 mt">
+						<md-button class="md-raised md-primary p"><i class="fa fa-print pr"></i> Imprimer</md-button>
+					</div>
+				</md-whiteframe>
+			</div>
+		</div>
+
+		  <!-- Angular Material Dependencies -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+
+	    <!-- Angular Material Javascript now available via Google CDN; version 0.8 used here -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+	    <script src="js/app.js"></script>
+	</body>
+</html>

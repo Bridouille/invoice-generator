@@ -1,0 +1,21 @@
+
+.ml	{ margin-left: 25px; }
+.mr	{ margin-right: 25px; }
+.mt	{ margin-top: 25px; }
+.mb	{ margin-bottom: 25px; }
+.pl	{ padding-left: 25px; }
+.pr	{ padding-right: 25px; }
+.pt	{ padding-top: 25px; }
+.pb	{ padding-bottom: 25px; }
+.m { margin: 15px; }
+.p { padding: 15px; }
+
+md-whiteframe {
+	padding: 15px;
+	margin-top: 20px;
+	margin-bottom: 20px;	
+}
+
+md-input-container {
+	padding-bottom: 0px;
+}
