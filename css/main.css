@@ -19,3 +19,23 @@ md-whiteframe {
 md-input-container {
 	padding-bottom: 0px;
 }
+
+p {
+	margin-bottom: 0px;
+}
+
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
+
+.table > thead > tr {
+	background-color: #9E9E9E;
+	color: white;
+}
+
+.table > thead > tr > th:first-child  { border-top-left-radius : 4px;  }
+.table > thead > tr > th:last-child { border-top-right-radius : 4px; }
+.table > tbody > tr:first-child > td:last-child { border-top-right-radius : 4px; }
+.table > tbody > tr:last-child > td:first-child { border-bottom-left-radius : 4px; }
+.table > tbody > tr:last-child > td:last-child { border-bottom-right-radius : 4px; }
+.table > tbody > tr:last-child { background-color : #f9f9f9; }
