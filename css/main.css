@@ -39,3 +39,7 @@ p {
 .table > tbody > tr:last-child > td:first-child { border-bottom-left-radius : 4px; }
 .table > tbody > tr:last-child > td:last-child { border-bottom-right-radius : 4px; }
 .table > tbody > tr:last-child { background-color : #f9f9f9; }
+
+.table {
+	width: auto;
+}

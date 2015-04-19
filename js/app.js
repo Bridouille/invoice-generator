@@ -6,7 +6,12 @@ invoice.config([ '$mdThemingProvider', function ($mdThemingProvider) {
 	$mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('blue-grey');
 }]);
 
-// Créer un filtre pour le numero de siret pour l'afficher joliement
+
+invoice.filter('siret', function () {
+	return (function (input) {
+		return (input.slice(0, 3) + " " + input.slice(3, 6) + " " + input.slice(6, 9) + " " + input.slice(9, 14));
+	});
+});
 
 invoice.directive('invoiceTotal', function () {
 	return ({
@@ -56,7 +61,11 @@ invoice.controller('invoiceCtrl', [ '$scope', function ($scope) {
 		devise : '€'
 	};
 
- 	// @TODO: cookies to save and init
+ 	// @TODO: cookies to save and init (after hitting print)
+ 	// Arrondir les resultats au 100ème
+ 	// Dimensions des table cells
+ 	// Print CSS
+ 	// responsive CSS
 	$scope.seller = {
 		name : 'Nicolas BRIDOUX',
 		siret : '09329329302032949293',

@@ -103,7 +103,7 @@
 						<div class="col-lg-6">
 							<b>De</b>
 							<p>{{ seller.name }}</p>
-							<p>Siret : <b>{{ seller.siret }}</b></p>
+							<p>Siret : <b>{{ seller.siret | siret }}</b></p>
 							<p>{{ seller.address }}</p>
 							<p>{{ seller.zipcode }}, {{ seller.city }} - {{ seller.country | uppercase }}</p>
 						</div>
@@ -124,12 +124,13 @@
 						</div>
 					</div>
 					<div class="col-lg-12 mt">
-						<md-content layout-padding layout="row" layout-align="center center" layout-sm="column">
+						<!-- layout-padding layout="row" layout-align="center center" layout-sm="column" -->
+						<!-- <md-content > -->
 							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Description</th>
+										<th class="col-lg-12">Description</th>
 										<th>Quantité</th>
 										<th>Unité</th>
 										<th>TVA</th>
@@ -149,7 +150,6 @@
 												<i class="fa fa-times"></i> Del
 											</md-button>
 										</td>
-										<!-- TODO : ADD TVA %age -->
 									</tr>
 									<tr class="addItem">
 										<td>
@@ -167,7 +167,7 @@
 									         	<input type="number" ng-model="newItem.quantity" >
 									        </md-input-container>
 										</td>
-										<td>
+										<td style="display-block: max-width: 50px">
 											<md-input-container flex>
 									         	<label>Unité</label>
 									         	<input type="number" ng-model="newItem.unit">
@@ -187,7 +187,7 @@
 									</tr>
 								</tbody>
 							</table>
-						</md-content>
+						<!-- </md-content> -->
 					</div>
 					<div class="col-lg-12">
 						<invoice-total to-sum="items" options="opt"></invoice-total>
@@ -252,8 +252,28 @@
 					        </md-input-container>
 						</div>
 					</div>
-					<!-- Ajouter le symbole devise -->
-
+					<div layout="row" layout-align="center center" class="col-xs-12 mt">
+						<div class="col-xs-5">
+							Devise
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Devise</label>
+					        	<input maxlength="5" ng-model="opt.devise">
+					        </md-input-container>
+						</div>
+					</div>
+					<div layout="row" layout-align="center center" class="col-xs-12">
+						<div class="col-xs-5">
+							Déjà payé
+						</div>
+						<div class="col-xs-7">
+							<md-input-container flex>
+					        	<label>Payé</label>
+					        	<input type="number" ng-model="opt.paid">
+					        </md-input-container>
+						</div>
+					</div>
 					<div layout="row" layout-align="center center" class="col-xs-12 mt">
 						<md-button class="md-raised md-accent p"><i class="fa fa-print pr"></i> Imprimer</md-button>
 					</div>
