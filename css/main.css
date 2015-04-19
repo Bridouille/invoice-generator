@@ -20,6 +20,8 @@ md-input-container {
 	padding-bottom: 0px;
 }
 
+md-bottom-sheet { background-color: #fff !important; }
+
 p {
 	margin-bottom: 0px;
 }
@@ -40,6 +42,5 @@ p {
 .table > tbody > tr:last-child > td:last-child { border-bottom-right-radius : 4px; }
 .table > tbody > tr:last-child { background-color : #f9f9f9; }
 
-.table {
-	width: auto;
-}
+h1, h2, h3, h4, h5 { font-weight: 300; }
+h2 { font-size: 30px; }

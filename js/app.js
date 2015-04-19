@@ -48,7 +48,7 @@ invoice.directive('invoiceTotal', function () {
 	});
 });
 
-invoice.controller('invoiceCtrl', [ '$scope', function ($scope) {
+invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', function ($scope, $mdBottomSheet) {
 	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
 
 	$scope.opt = {
@@ -77,7 +77,14 @@ invoice.controller('invoiceCtrl', [ '$scope', function ($scope) {
 
 	$scope.items = [ ];
 
-	$scope.client = $scope.seller;
+	$scope.client = {
+		name : 'Nicolas BRIDOUX',
+		siret : '09329329302032949293',
+		address : '43 Rue denise',
+		city : 'Bordeaux',
+		zipcode : '33300',
+		country : 'france'
+	};
 
 	$scope.formatDate = function (date) {
 		return (date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear());
@@ -106,5 +113,19 @@ invoice.controller('invoiceCtrl', [ '$scope', function ($scope) {
 	$scope.removeItem = function (item) {
 		$scope.items.splice($scope.items.indexOf(item), 1);
 	};
+
+	$scope.showOptions = function ($event) {
+		$mdBottomSheet.show({
+	      templateUrl: 'templates/options.html',
+	      controller: 'bottomSheetCtrl',
+	      scope: $scope,
+	      preserveScope: true,
+	      targetEvent: $event
+	    });
+	};
+
+}]);
+
+invoice.controller('bottomSheetCtrl', [ '$scope', function ($scope) {
 
 }]);

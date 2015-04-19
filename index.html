@@ -13,129 +13,56 @@
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body ng-app="invoice" ng-controller="invoiceCtrl">
-		<md-toolbar class="md-primary">
+		<md-toolbar class="md-primary md-hue-2">
 		    <div class="md-toolbar-tools">
-		      <h2 class="md-flex">Générateur de factures</h2>
+		     	<md-button class="md-default" ng-click="showOptions($event)">
+		      		<i class="fa fa-coffee"></i> générateur de factures
+		    	</md-button>
+		      	<span flex></span>
+		      	<md-button class="md-default" ng-click="showOptions($event)">
+		      		<i class="fa fa-users"></i> Modifier les parties
+		    	</md-button>
 		    </div>
 		</md-toolbar>
-		<div class="container-fluid">
-			<div class="col-lg-3">
-				<div class="col-lg-12">
-					<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
-						<h2>Créancier</h2>
-						<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-						    <md-input-container class="col-xs-12">
-						    	<label>Dénomination</label>
-						    	<input ng-model="seller.name">
-						    </md-input-container>
-					  	</md-content>
-					  	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-						    <md-input-container class="col-xs-12">
-						    	<label>N° de SIRET</label>
-						    	<input ng-model="seller.siret">
-						    </md-input-container>
-					  	</md-content>
-					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-					 		<md-input-container flex class="col-xs-12">
-					        	<label>Adresse</label>
-					        	<input ng-model="seller.address">
-					      	</md-input-container>
-					    </md-content>
-					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-					        <md-input-container flex class="col-xs-12">
-					         	<label>Ville</label>
-					         	<input ng-model="seller.city">
-					        </md-input-container>
-					    </md-content>
-					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-					      	<div layout layout-sm="column">
-					        <md-input-container flex>
-					          	<label>Code postal</label>
-					         	<input ng-model="seller.zipcode">
-					        </md-input-container>
-					        <md-input-container flex>
-					         	<label>Pays</label>
-					         	<input ng-model="seller.country">
-					        </md-input-container>
-					        </div>
-					 	</md-content>
-					</md-whiteframe>
-				</div>
-				<div class="col-lg-12">
-					<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
-						<h2>Destinataire</h2>
-						<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-						    <md-input-container class="col-xs-12">
-						    	<label>Dénomination</label>
-						    	<input ng-model="client.name">
-						    </md-input-container>
-					  	</md-content>
-					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-					 		<md-input-container flex class="col-xs-12">
-					        	<label>Adresse</label>
-					        	<input ng-model="client.address">
-					      	</md-input-container>
-					    </md-content>
-					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-					        <md-input-container flex class="col-xs-12">
-					         	<label>Ville</label>
-					         	<input ng-model="client.city">
-					        </md-input-container>
-					    </md-content>
-					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
-					      	<div layout layout-sm="column">
-					        <md-input-container flex>
-					          	<label>Code postal</label>
-					         	<input ng-model="client.zipcode">
-					        </md-input-container>
-					        <md-input-container flex>
-					         	<label>Pays</label>
-					         	<input ng-model="client.country">
-					        </md-input-container>
-					        </div>
-					 	</md-content>
-					</md-whiteframe>
-				</div>
-			</div>
-			<div class="col-lg-6">
+		<div class="container-fluid">	
+			<div class="col-lg-8">
 				<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
-					<div class="col-lg-12">
-						<div class="col-lg-6">
-							<b>De</b>
-							<p>{{ seller.name }}</p>
-							<p>Siret : <b>{{ seller.siret | siret }}</b></p>
-							<p>{{ seller.address }}</p>
-							<p>{{ seller.zipcode }}, {{ seller.city }} - {{ seller.country | uppercase }}</p>
+			        <md-content class="md-padding">
+			          	<div class="col-lg-12">
+							<div class="col-lg-6">
+								<b>De</b>
+								<p>{{ seller.name }}</p>
+								<p>Siret : <b>{{ seller.siret | siret }}</b></p>
+								<p>{{ seller.address }}</p>
+								<p>{{ seller.zipcode }}, {{ seller.city }} - {{ seller.country | uppercase }}</p>
+							</div>
+							<div class="col-lg-6 text-right">
+								<h1><em>{{ opt.type == true ? 'Facture' : 'Devis' }} N° {{ opt.number }}</em></h1>
+							</div>
 						</div>
-						<div class="col-lg-6 text-right">
-							<h1><em>{{ opt.type == true ? 'Facture' : 'Devis' }} N° {{ opt.number }}</em></h1>
+						<div class="col-lg-12 mt">
+							<div class="col-lg-6">
+								<b>A</b>
+								<p>{{ client.name }}</p>
+								<p>{{ client.address }}</p>
+								<p>{{ client.zipcode }}, {{ client.city }} - {{ client.country | uppercase }}</p>
+							</div>
+							<div class="col-lg-6 text-right mt">
+								<p><strong>Date {{ opt.type == true ? 'de la facture' : 'du devis' }} : </strong>{{ formatDate(opt.startDate) }}</p>
+								<p><strong>Date d'échéance :</strong> {{ formatDate(opt.endDate) }}</p>
+							</div>
 						</div>
-					</div>
-					<div class="col-lg-12 mt">
-						<div class="col-lg-6">
-							<b>A</b>
-							<p>{{ client.name }}</p>
-							<p>{{ client.address }}</p>
-							<p>{{ client.zipcode }}, {{ client.city }} - {{ client.country | uppercase }}</p>
-						</div>
-						<div class="col-lg-6 text-right mt">
-							<p><strong>Date {{ opt.type == true ? 'de la facture' : 'du devis' }} : </strong>{{ formatDate(opt.startDate) }}</p>
-							<p><strong>Date d'échéance :</strong> {{ formatDate(opt.endDate) }}</p>
-						</div>
-					</div>
-					<div class="col-lg-12 mt">
-						<!-- layout-padding layout="row" layout-align="center center" layout-sm="column" -->
-						<!-- <md-content > -->
+						<div class="col-lg-12 mt">
 							<table class="table table-hover">
 								<thead>
-									<tr>
+									<!-- <tr> -->
 										<th>#</th>
 										<th class="col-lg-12">Description</th>
 										<th>Quantité</th>
 										<th>Unité</th>
-										<th>TVA</th>
-										<th>Coût</th>
-									</tr>
+										<th class="col-lg-4">TVA</th>
+										<th class="col-lg-4">Coût</th>
+									<!-- </tr> -->
 								</thead>
 								<tbody>
 									<tr ng-repeat="(idx, item) in items">
@@ -167,7 +94,7 @@
 									         	<input type="number" ng-model="newItem.quantity" >
 									        </md-input-container>
 										</td>
-										<td style="display-block: max-width: 50px">
+										<td>
 											<md-input-container flex>
 									         	<label>Unité</label>
 									         	<input type="number" ng-model="newItem.unit">
@@ -187,14 +114,14 @@
 									</tr>
 								</tbody>
 							</table>
-						<!-- </md-content> -->
-					</div>
-					<div class="col-lg-12">
-						<invoice-total to-sum="items" options="opt"></invoice-total>
-					</div>
+						</div>
+						<div class="col-lg-12">
+							<invoice-total to-sum="items" options="opt"></invoice-total>
+						</div>
+			        </md-content>				
 				</md-whiteframe>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
 					<h2>Options</h2>
 					<div layout="row" layout-align="center center" class="col-xs-12">
@@ -275,7 +202,7 @@
 						</div>
 					</div>
 					<div layout="row" layout-align="center center" class="col-xs-12 mt">
-						<md-button class="md-raised md-accent p"><i class="fa fa-print pr"></i> Imprimer</md-button>
+						<md-button class="md-primary md-hue-2 p"><i class="fa fa-print pr"></i> Imprimer</md-button>
 					</div>
 				</md-whiteframe>
 			</div>
