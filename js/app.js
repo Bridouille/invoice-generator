@@ -1,6 +1,6 @@
 'use sctrict';
 
-var invoice = angular.module('invoice', [ 'ngMaterial' ]);
+var invoice = angular.module('invoice', [ 'ngMaterial', 'ngCookies' ]);
 
 invoice.config([ '$mdThemingProvider', function ($mdThemingProvider) {
 	$mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('blue-grey');
@@ -48,9 +48,14 @@ invoice.directive('invoiceTotal', function () {
 	});
 });
 
-invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', function ($scope, $mdBottomSheet) {
+// Arrondir les resultats au 100ème
+// Print CSS
+// responsive CSS
+
+invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', function ($scope, $mdBottomSheet, $cookies) {
 	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
 
+	$scope.items = [ ];
 	$scope.opt = {
 		tva : 0,
 		type : false,
@@ -61,30 +66,18 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', function ($scope
 		devise : '€'
 	};
 
- 	// @TODO: cookies to save and init (after hitting print)
- 	// Arrondir les resultats au 100ème
- 	// Dimensions des table cells
- 	// Print CSS
- 	// responsive CSS
-	$scope.seller = {
-		name : 'Nicolas BRIDOUX',
-		siret : '09329329302032949293',
-		address : '43 Rue denise',
-		city : 'Bordeaux',
-		zipcode : '33300',
-		country : 'france'
-	};
-
-	$scope.items = [ ];
-
-	$scope.client = {
-		name : 'Nicolas BRIDOUX',
-		siret : '09329329302032949293',
-		address : '43 Rue denise',
-		city : 'Bordeaux',
-		zipcode : '33300',
-		country : 'france'
-	};
+	try {
+		$scope.seller = JSON.parse($cookies['seller']);
+	} catch (e) {
+		$scope.seller = {
+			name : 'Nicolas BRIDOUX',
+			siret : '01234567890123456789',
+			address : '44 Cours de la Martinique',
+			city : 'Bordeaux',
+			zipcode : '33300',
+			country : 'france'
+		};
+	}
 
 	$scope.formatDate = function (date) {
 		return (date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear());
@@ -94,6 +87,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', function ($scope
 		var sum = parseInt(newItem.unit) * parseInt(newItem.quantity);
 
 		sum += sum * ($scope.opt.tva / 100);
+		sum = Math.round(sum * 100) / 100;
 		return (sum + $scope.opt.devise);
 	};
 
@@ -122,6 +116,11 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', function ($scope
 	      preserveScope: true,
 	      targetEvent: $event
 	    });
+	};
+
+	$scope.print = function () {
+		$cookies['seller'] = JSON.stringify($scope.seller);
+		window.print();
 	};
 
 }]);

@@ -44,3 +44,15 @@ p {
 
 h1, h2, h3, h4, h5 { font-weight: 300; }
 h2 { font-size: 30px; }
+
+div#item-list {
+	overflow: scroll;
+}
+
+.item-tva {
+	min-width: 50px;
+}
+
+.item-total {
+	min-width: 70px;
+}
