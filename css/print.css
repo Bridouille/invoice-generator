@@ -1,0 +1,17 @@
+.hide-print {
+	display: none;
+}
+
+@page {
+	margin: 0;
+}
+
+#item-list {
+	margin-top: 50px;
+}
+
+invoice-total {
+	position: relative;
+	top: 50px;
+	right: 0px;
+}

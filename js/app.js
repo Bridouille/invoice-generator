@@ -48,10 +48,6 @@ invoice.directive('invoiceTotal', function () {
 	});
 });
 
-// Arrondir les resultats au 100ème
-// Print CSS
-// responsive CSS
-
 invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', function ($scope, $mdBottomSheet, $cookies) {
 	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
 
@@ -84,7 +80,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 	};
 
 	$scope.calcLine = function (newItem) {
-		var sum = parseInt(newItem.unit) * parseInt(newItem.quantity);
+		var sum = parseFloat(newItem.unit) * parseInt(newItem.quantity);
 
 		sum += sum * ($scope.opt.tva / 100);
 		sum = Math.round(sum * 100) / 100;

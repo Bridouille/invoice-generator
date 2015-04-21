@@ -11,9 +11,11 @@
 
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/main.css">
+
+		<link rel="stylesheet" href="css/print.css" media="print">
 	</head>
 	<body ng-app="invoice" ng-controller="invoiceCtrl">
-		<md-toolbar class="md-primary md-hue-2">
+		<md-toolbar class="md-primary md-hue-2 hide-print">
 		    <div class="md-toolbar-tools">
 		     	<md-button class="md-default" ng-click="showOptions($event)">
 		      		<i class="fa fa-coffee"></i> générateur de factures
@@ -54,33 +56,28 @@
 						<div class="col-lg-12 mt" id="item-list">
 							<table class="table table-hover" >
 								<thead>
-									<!-- <tr> -->
-										<th>#</th>
+									<tr>
 										<th class="col-lg-12">Description</th>
 										<th>Quantité</th>
 										<th>Unité</th>
 										<th class="item-tva">TVA</th>
 										<th class="item-total">Coût</th>
-									<!-- </tr> -->
+									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="(idx, item) in items">
-										<td>{{ idx + 1 }}</td>
 										<td>{{ item.description }}</td>
 										<td>{{ item.quantity }}</td>
 										<td>{{ item.unit }} {{ opt.devise }}</td>
 										<td>{{ opt.tva }} %</td>
 										<td>{{ calcLine(item)}}</td>
 										<td>
-											<md-button class="md-primary md-warn" aria-label="Remove item" ng-click="removeItem(item)">
+											<md-button class="md-primary md-warn hide-print" aria-label="Remove item" ng-click="removeItem(item)">
 												<i class="fa fa-times"></i> Del
 											</md-button>
 										</td>
 									</tr>
-									<tr class="addItem">
-										<td>
-											{{ items.length + 1}}
-										</td>
+									<tr class="addItem hide-print">
 										<td>
 											<md-input-container flex>
 									         	<label>Description</label>
@@ -119,7 +116,7 @@
 						</div>			
 				</md-whiteframe>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-4 hide-print">
 				<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
 					<h2>Options</h2>
 					<div layout="row" layout-align="center center" class="col-xs-12">
