@@ -31,8 +31,10 @@ invoice.directive('invoiceTotal', function () {
 				angular.forEach(scope.items, function (v, k) {
 					scope.subTotal += v.unit * v.quantity;
 				});
-				scope.totalTva = scope.subTotal * scope.opt.tva / 100;
-				scope.total = scope.subTotal + scope.totalTva;
+
+				scope.subTotal = Math.round(scope.subTotal * 100) / 100;
+				scope.totalTva = Math.round(scope.subTotal * scope.opt.tva / 100 * 100) / 100;
+				scope.total = Math.round(scope.subTotal + scope.totalTva);
 			};
 
 			scope.$watch(attrs.toSum, function (newValue) {
@@ -67,8 +69,8 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 	} catch (e) {
 		$scope.seller = {
 			name : 'Nicolas BRIDOUX',
-			siret : '01234567890123456789',
-			address : '44 Cours de la Martinique',
+			siret : '81006118400018',
+			address : '43 Rue Denise',
 			city : 'Bordeaux',
 			zipcode : '33300',
 			country : 'france'
