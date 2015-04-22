@@ -15,3 +15,20 @@ invoice-total {
 	top: 50px;
 	right: 0px;
 }
+
+invoice-total {
+	float: right;
+}
+
+invoice-total span.pull-right {
+	margin-left: 50px;
+}
+
+#item-list thead tr {
+	border-bottom: 3px solid black;
+}
+
+/*#item-list tbody, #item-list thead {
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}*/

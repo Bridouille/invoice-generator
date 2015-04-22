@@ -63,7 +63,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 	};
 
 	try {
-		$scope.seller = JSON.parse($cookies['seller']);
+		$scope.seller = JSON.parse($cookies.seller);
 	} catch (e) {
 		$scope.seller = {
 			name : 'Nicolas BRIDOUX',
@@ -93,7 +93,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 			unit : 0,
 			quantity : 1,
 		});
-	}
+	};
 
 	$scope.addItem = function (newItem) {
 		$scope.items.push(angular.copy(newItem));
@@ -115,7 +115,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 	};
 
 	$scope.print = function () {
-		$cookies['seller'] = JSON.stringify($scope.seller);
+		$cookies.seller = JSON.stringify($scope.seller);
 		window.print();
 	};
 
