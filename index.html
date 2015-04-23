@@ -12,112 +12,201 @@
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<!-- Angular Material Dependencies -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.js"></script>
+
+	    <!-- Angular Material Javascript now available via Google CDN; version 0.8 used here -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+	    <script src="js/app.js"></script>
 	</head>
 	<body ng-app="invoice" ng-controller="invoiceCtrl">
 		<md-toolbar class="md-primary md-hue-2 hide-print">
 		    <div class="md-toolbar-tools">
-		     	<md-button class="md-default" ng-click="showOptions($event)">
+		     	<md-button class="md-default">
 		      		<i class="fa fa-coffee"></i> générateur de factures
-		    	</md-button>
-		      	<span flex></span>
-		      	<md-button class="md-default" ng-click="showOptions($event)">
-		      		<i class="fa fa-users"></i> Modifier les parties
 		    	</md-button>
 		    </div>
 		</md-toolbar>
-		<div class="container-fluid">	
+		<div class="container-fluid">
 			<div class="col-lg-8">
-				<md-whiteframe class="md-whiteframe-z1" layout="column">
-			          	<div class="col-lg-12">
-							<div class="col-xs-6">
-								<b>De</b>
-								<p>{{ seller.name }}</p>
-								<p>Siret : <b>{{ seller.siret | siret }}</b></p>
-								<p>{{ seller.address }}</p>
-								<p>{{ seller.zipcode }}, {{ seller.city }} - {{ seller.country | uppercase }}</p>
-							</div>
-							<div class="col-xs-6 text-right">
-								<h1><em>{{ opt.type == true ? 'Facture' : 'Devis' }} N° {{ opt.number }}</em></h1>
-							</div>
+			<md-whiteframe class="md-whiteframe-z1 content" layout="column">
+			<md-tabs md-dynamic-height md-border-bottom>
+			 	<md-tab label="apperçu">
+		        	<div class="col-lg-12">
+						<div class="col-xs-6">
+							<b>De</b>
+							<p>{{ seller.name }}</p>
+							<p>Siret : <b>{{ seller.siret | siret }}</b></p>
+							<p>{{ seller.address }}</p>
+							<p>{{ seller.zipcode }}, {{ seller.city }} - {{ seller.country | uppercase }}</p>
 						</div>
-						<div class="col-lg-12 mt">
-							<div class="col-lg-6">
-								<b>A</b>
-								<p>{{ client.name }}</p>
-								<p>{{ client.address }}</p>
-								<p>{{ client.zipcode }}, {{ client.city }} - {{ client.country | uppercase }}</p>
-							</div>
-							<div class="col-lg-6 text-right mt">
-								<p><strong>Date {{ opt.type == true ? 'de la facture' : 'du devis' }} : </strong>{{ formatDate(opt.startDate) }}</p>
-								<p><strong>Date d'échéance :</strong> {{ formatDate(opt.endDate) }}</p>
-							</div>
+						<div class="col-xs-6 text-right">
+							<h1><em>{{ opt.type == true ? 'Facture' : 'Devis' }} N° {{ opt.number }}</em></h1>
 						</div>
-						<div class="col-lg-12 mt" id="item-list">
-							<table class="table table-hover" >
-								<thead>
-									<tr>
-										<th class="col-lg-12">Description</th>
-										<th>Quantité</th>
-										<th>Unité</th>
-										<th class="item-tva">TVA</th>
-										<th class="item-total">Coût</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="(idx, item) in items">
-										<td>{{ item.description }}</td>
-										<td>{{ item.quantity }}</td>
-										<td>{{ item.unit }} {{ opt.devise }}</td>
-										<td>{{ opt.tva }} %</td>
-										<td>{{ calcLine(item)}}</td>
-										<td>
-											<md-button class="md-primary md-warn hide-print" aria-label="Remove item" ng-click="removeItem(item)">
-												<i class="fa fa-times"></i> Del
-											</md-button>
-										</td>
-									</tr>
-									<tr class="addItem hide-print">
-										<td>
-											<md-input-container flex>
-									         	<label>Description</label>
-									         	<input ng-model="newItem.description" ng-init="newItem = genNewItem()">
-									        </md-input-container>
-										</td>
-										<td>
-											<md-input-container flex>
-									         	<label>Quantité</label>
-									         	<input type="number" ng-model="newItem.quantity" >
-									        </md-input-container>
-										</td>
-										<td>
-											<md-input-container flex>
-									         	<label>Unité</label>
-									         	<input type="number" ng-model="newItem.unit">
-									        </md-input-container>
-										</td>
-										<td>
-											{{ opt.tva }} %
-										</td>
-										<td>
-											{{ calcLine(newItem) }}
-										</td>
-										<td>
-											<md-button class="md-primary" ng-click="addItem(newItem)">
-												<i class="fa fa-plus"></i> Add
-											</md-button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+					</div>
+					<div class="col-lg-12 mt">
+						<div class="col-lg-6">
+							<b>A</b>
+							<p>{{ client.name }}</p>
+							<p>{{ client.address }}</p>
+							<p>{{ client.zipcode }}, {{ client.city }} - {{ client.country | uppercase }}</p>
 						</div>
-						<div class="col-lg-12">
-							<invoice-total to-sum="items" options="opt"></invoice-total>
-						</div>			
+						<div class="col-lg-6 text-right mt">
+							<p><strong>Date {{ opt.type == true ? 'de la facture' : 'du devis' }} : </strong>{{ formatDate(opt.startDate) }}</p>
+							<p><strong>Date d'échéance :</strong> {{ formatDate(opt.endDate) }}</p>
+						</div>
+					</div>
+					<div class="col-lg-12 mt" id="item-list">
+						<table class="table table-hover" >
+							<thead>
+								<tr>
+									<th class="col-lg-12">Description</th>
+									<th>Quantité</th>
+									<th>Unité</th>
+									<th class="item-tva">TVA</th>
+									<th class="item-total">Coût</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(idx, item) in items">
+									<td>{{ item.description }}</td>
+									<td>{{ item.quantity }}</td>
+									<td>{{ item.unit }} {{ opt.devise }}</td>
+									<td>{{ opt.tva }} %</td>
+									<td>{{ calcLine(item)}}</td>
+									<td>
+										<md-button class="md-primary md-warn hide-print" aria-label="Remove item" ng-click="removeItem(item)">
+											<i class="fa fa-times"></i> Del
+										</md-button>
+									</td>
+								</tr>
+								<tr class="addItem hide-print">
+									{{ newItem }}
+									<td>
+										<md-input-container flex>
+								         	<label>Description</label>
+								         	<input ng-model="newItem.description" ng-init="newItem = genNewItem()">
+								        </md-input-container>
+									</td>
+									<td>
+										<md-input-container flex>
+								         	<label>Quantité</label>
+								         	<input type="number" ng-model="newItem.quantity" >
+								        </md-input-container>
+									</td>
+									<td>
+										<md-input-container flex>
+								         	<label>Unité</label>
+								         	<input type="number" ng-model="newItem.unit">
+								        </md-input-container>
+									</td>
+									<td>
+										{{ opt.tva }} %
+									</td>
+									<td>
+										{{ calcLine(newItem) }}
+									</td>
+									<td>
+										<md-button class="md-primary" ng-click="addItem(newItem)">
+											<i class="fa fa-plus"></i> Add
+										</md-button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-lg-12">
+						<invoice-total to-sum="items" options="opt"></invoice-total>
+					</div>			
+		    	</md-tab>
+		    	<md-tab label="parties">
+		        <div class="col-sm-6">
+					<div>
+						<h2 class="text-center">Créancier</h2>
+						<md-content layout-padding layout="column" layout-sm="column" class="col-xs-6">
+						    <md-input-container class="col-xs-12">
+						    	<label>Dénomination</label>
+						    	<input ng-model="seller.name">
+						    </md-input-container>
+					  	</md-content>
+					  	<md-content layout-padding layout="column" layout-sm="column" class="col-xs-6">
+						    <md-input-container class="col-xs-12">
+						    	<label>N° de SIRET</label>
+						    	<input ng-model="seller.siret">
+						    </md-input-container>
+					  	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					 		<md-input-container flex class="col-xs-12">
+					        	<label>Adresse</label>
+					        	<input ng-model="seller.address">
+					      	</md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex class="col-xs-12">
+					         	<label>Ville</label>
+					         	<input ng-model="seller.city">
+					        </md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex>
+					          	<label>Code postal</label>
+					         	<input ng-model="seller.zipcode">
+					        </md-input-container>
+					 	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					 		<md-input-container flex>
+					         	<label>Pays</label>
+					         	<input ng-model="seller.country">
+					        </md-input-container>
+					 	</md-content>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div>
+						<h2 class="text-center">Destinataire</h2>
+						<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+						    <md-input-container class="col-xs-12">
+						    	<label>Dénomination</label>
+						    	<input ng-model="client.name">
+						    </md-input-container>
+					  	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-12">
+					 		<md-input-container flex class="col-xs-12">
+					        	<label>Adresse</label>
+					        	<input ng-model="client.address">
+					      	</md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex class="col-xs-12">
+					         	<label>Ville</label>
+					         	<input ng-model="client.city">
+					        </md-input-container>
+					    </md-content>
+					    <md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					        <md-input-container flex>
+					          	<label>Code postal</label>
+					         	<input ng-model="client.zipcode">
+					        </md-input-container>
+					 	</md-content>
+					 	<md-content layout-padding layout="row" layout-sm="column" class="col-xs-4">
+					 		<md-input-container flex>
+					         	<label>Pays</label>
+					         	<input ng-model="client.country">
+					        </md-input-container>
+					 	</md-content>
+					</div>
+				</div>
+		    	</md-tab>
+			</md-tabs>	
 				</md-whiteframe>
 			</div>
 			<div class="col-lg-4 hide-print">
-				<md-whiteframe class="md-whiteframe-z1" layout="column" layout-align="center center">
+				<md-whiteframe class="md-whiteframe-z1 options" layout="column" layout-align="center center">
 					<h2>Options</h2>
 					<div layout="row" layout-align="center center" class="col-xs-12">
 						<div class="col-xs-4">
@@ -202,15 +291,5 @@
 				</md-whiteframe>
 			</div>
 		</div>
-
-		  <!-- Angular Material Dependencies -->
-	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
-	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.js"></script>
-
-	    <!-- Angular Material Javascript now available via Google CDN; version 0.8 used here -->
-	    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
-	    <script src="js/app.js"></script>
 	</body>
 </html>

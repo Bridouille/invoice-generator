@@ -10,6 +10,10 @@
 	margin-top: 50px;
 }
 
+.md-header {
+	display: none;
+}
+
 invoice-total {
 	position: relative;
 	top: 50px;
@@ -28,7 +32,6 @@ invoice-total span.pull-right {
 	border-bottom: 3px solid black;
 }
 
-/*#item-list tbody, #item-list thead {
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-}*/
+#item-list tbody tr {
+	border-bottom: 2px solid #e1e1e1;
+}

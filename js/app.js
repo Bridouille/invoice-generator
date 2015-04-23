@@ -3,7 +3,7 @@
 var invoice = angular.module('invoice', [ 'ngMaterial', 'ngCookies' ]);
 
 invoice.config([ '$mdThemingProvider', function ($mdThemingProvider) {
-	$mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('blue-grey');
+	// $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('blue-grey');
 }]);
 
 
@@ -12,6 +12,11 @@ invoice.filter('siret', function () {
 		return (input.slice(0, 3) + " " + input.slice(3, 6) + " " + input.slice(6, 9) + " " + input.slice(9, 14));
 	});
 });
+
+// TODO :
+// Chqnge theme
+// Verify print
+// Look why newItem is not updating
 
 invoice.directive('invoiceTotal', function () {
 	return ({
@@ -33,9 +38,9 @@ invoice.directive('invoiceTotal', function () {
 				});
 
 				scope.subTotal = Math.round(scope.subTotal * 100) / 100;
-				scope.totalTva = Math.round(scope.subTotal * scope.opt.tva / 100 * 100) / 100;
-				scope.total = Math.round(scope.subTotal + scope.totalTva);
-			};
+				scope.totalTva = Math.round((scope.subTotal * scope.opt.tva / 100) * 100) / 100;
+				scope.total = Math.round((scope.subTotal + scope.totalTva) * 100) / 100;
+			}
 
 			scope.$watch(attrs.toSum, function (newValue) {
 				scope.items = newValue;
@@ -50,7 +55,7 @@ invoice.directive('invoiceTotal', function () {
 	});
 });
 
-invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', function ($scope, $mdBottomSheet, $cookies) {
+invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $cookies) {
 	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
 
 	$scope.items = [ ];
@@ -97,6 +102,17 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 		});
 	};
 
+	$scope.genNewClient = function () {
+		return ({
+			name : '',
+			siret : '',
+			address : '',
+			city : '',
+			zipcode : '',
+			country : ''
+		});
+	};
+
 	$scope.addItem = function (newItem) {
 		$scope.items.push(angular.copy(newItem));
 		$scope.newItem = $scope.genNewItem();
@@ -106,23 +122,9 @@ invoice.controller('invoiceCtrl', [ '$scope', '$mdBottomSheet', '$cookies', func
 		$scope.items.splice($scope.items.indexOf(item), 1);
 	};
 
-	$scope.showOptions = function ($event) {
-		$mdBottomSheet.show({
-	      templateUrl: 'templates/options.html',
-	      controller: 'bottomSheetCtrl',
-	      scope: $scope,
-	      preserveScope: true,
-	      targetEvent: $event
-	    });
-	};
-
 	$scope.print = function () {
 		$cookies.seller = JSON.stringify($scope.seller);
 		window.print();
 	};
-
-}]);
-
-invoice.controller('bottomSheetCtrl', [ '$scope', function ($scope) {
 
 }]);

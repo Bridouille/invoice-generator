@@ -11,7 +11,6 @@
 .p { padding: 15px; }
 
 md-whiteframe {
-	padding: 15px;
 	margin-top: 20px;
 	margin-bottom: 20px;	
 }
@@ -20,7 +19,14 @@ md-input-container {
 	padding-bottom: 0px;
 }
 
-md-bottom-sheet { background-color: #fff !important; }
+.options {
+	padding: 25px;
+}
+
+.md-tabs-content {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
 
 p {
 	margin-bottom: 0px;
