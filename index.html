@@ -48,7 +48,7 @@
 							<h1><em>{{ opt.type == true ? 'Facture' : 'Devis' }} N° {{ opt.number }}</em></h1>
 						</div>
 					</div>
-					<div class="col-lg-12 mt">
+					<div class="col-lg-12 mt client">
 						<div class="col-lg-6">
 							<b>A</b>
 							<p>{{ client.name }}</p>
@@ -85,12 +85,11 @@
 										</md-button>
 									</td>
 								</tr>
-								<tr class="addItem hide-print">
-									{{ newItem }}
+								<tr class="addItem hide-print" >
 									<td>
 										<md-input-container flex>
 								         	<label>Description</label>
-								         	<input ng-model="newItem.description" ng-init="newItem = genNewItem()">
+								         	<input ng-model="newItem.description" >
 								        </md-input-container>
 									</td>
 									<td>

@@ -3,7 +3,7 @@
 var invoice = angular.module('invoice', [ 'ngMaterial', 'ngCookies' ]);
 
 invoice.config([ '$mdThemingProvider', function ($mdThemingProvider) {
-	// $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('blue-grey');
+	$mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('deep-orange');
 }]);
 
 
@@ -12,11 +12,6 @@ invoice.filter('siret', function () {
 		return (input.slice(0, 3) + " " + input.slice(3, 6) + " " + input.slice(6, 9) + " " + input.slice(9, 14));
 	});
 });
-
-// TODO :
-// Chqnge theme
-// Verify print
-// Look why newItem is not updating
 
 invoice.directive('invoiceTotal', function () {
 	return ({
@@ -38,6 +33,9 @@ invoice.directive('invoiceTotal', function () {
 				});
 
 				scope.subTotal = Math.round(scope.subTotal * 100) / 100;
+				if (isNaN(scope.subTotal)) {
+					scope.subTotal = 0;
+				}
 				scope.totalTva = Math.round((scope.subTotal * scope.opt.tva / 100) * 100) / 100;
 				scope.total = Math.round((scope.subTotal + scope.totalTva) * 100) / 100;
 			}
@@ -51,36 +49,15 @@ invoice.directive('invoiceTotal', function () {
 				scope.opt = newValue;
 				updateTotals();
 			}, true);
+
+			scope.round = function (value, decimals) {
+				return (Number(Math.round(value+'e'+decimals)+'e-'+decimals));
+			}
 		}
 	});
 });
 
 invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $cookies) {
-	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
-
-	$scope.items = [ ];
-	$scope.opt = {
-		tva : 0,
-		type : false,
-		number : 1,
-		startDate : new Date(),
-		endDate : new Date(),
-		paid : 0,
-		devise : '€'
-	};
-
-	try {
-		$scope.seller = JSON.parse($cookies.seller);
-	} catch (e) {
-		$scope.seller = {
-			name : 'Nicolas BRIDOUX',
-			siret : '81006118400018',
-			address : '43 Rue Denise',
-			city : 'Bordeaux',
-			zipcode : '33300',
-			country : 'france'
-		};
-	}
 
 	$scope.formatDate = function (date) {
 		return (date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear());
@@ -91,6 +68,9 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $coo
 
 		sum += sum * ($scope.opt.tva / 100);
 		sum = Math.round(sum * 100) / 100;
+		if (isNaN(sum)) {
+			sum = 0;
+		}
 		return (sum + $scope.opt.devise);
 	};
 
@@ -126,5 +106,35 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $coo
 		$cookies.seller = JSON.stringify($scope.seller);
 		window.print();
 	};
+
+	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
+
+	$scope.items = [ ];
+	$scope.newItem = $scope.genNewItem();
+	 // $scope.genNewClient();
+	$scope.opt = {
+		tva : 0,
+		type : false,
+		number : 1,
+		startDate : new Date(),
+		endDate : new Date(),
+		paid : 0,
+		devise : '€'
+	};
+
+	try {
+		$scope.seller = JSON.parse($cookies.seller);
+	} catch (e) {
+		$scope.seller = {
+			name : 'Nicolas BRIDOUX',
+			siret : '81006118400018',
+			address : '43 Rue Denise',
+			city : 'Bordeaux',
+			zipcode : '33300',
+			country : 'france'
+		};
+	}
+
+	$scope.client = $scope.seller;
 
 }]);

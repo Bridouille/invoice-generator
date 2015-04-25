@@ -22,10 +22,15 @@ invoice-total {
 
 invoice-total {
 	float: right;
+	min-height: 250px;
 }
 
 invoice-total span.pull-right {
 	margin-left: 50px;
+}
+
+.client {
+	margin-top: 150px;
 }
 
 #item-list thead tr {
