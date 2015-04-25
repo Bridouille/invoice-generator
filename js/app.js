@@ -111,7 +111,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $coo
 
 	$scope.items = [ ];
 	$scope.newItem = $scope.genNewItem();
-	 // $scope.genNewClient();
+	$scope.client = $scope.genNewClient();
 	$scope.opt = {
 		tva : 0,
 		type : false,
@@ -134,7 +134,5 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $coo
 			country : 'france'
 		};
 	}
-
-	$scope.client = $scope.seller;
 
 }]);
