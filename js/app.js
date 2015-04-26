@@ -6,7 +6,6 @@ invoice.config([ '$mdThemingProvider', function ($mdThemingProvider) {
 	$mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('deep-orange');
 }]);
 
-
 invoice.filter('siret', function () {
 	return (function (input) {
 		return (input.slice(0, 3) + " " + input.slice(3, 6) + " " + input.slice(6, 9) + " " + input.slice(9, 14));
@@ -38,7 +37,7 @@ invoice.directive('invoiceTotal', function () {
 				}
 				scope.totalTva = Math.round((scope.subTotal * scope.opt.tva / 100) * 100) / 100;
 				scope.total = Math.round((scope.subTotal + scope.totalTva) * 100) / 100;
-			}
+			};
 
 			scope.$watch(attrs.toSum, function (newValue) {
 				scope.items = newValue;
@@ -52,12 +51,12 @@ invoice.directive('invoiceTotal', function () {
 
 			scope.round = function (value, decimals) {
 				return (Number(Math.round(value+'e'+decimals)+'e-'+decimals));
-			}
+			};
 		}
 	});
 });
 
-invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $cookies) {
+invoice.controller('invoiceCtrl', [ '$scope', '$cookies', '$mdToast', function ($scope, $cookies, $mdToast) {
 
 	$scope.formatDate = function (date) {
 		return (date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear());
@@ -105,6 +104,13 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $coo
 	$scope.print = function () {
 		$cookies.seller = JSON.stringify($scope.seller);
 		window.print();
+
+		$mdToast.show({
+			controller: 'toastCtrl',
+			templateUrl: 'templates/toast-template.html',
+			hideDelay: 7000,
+			position: 'bottom left'
+		});
 	};
 
 	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
@@ -135,4 +141,10 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', function ($scope, $coo
 		};
 	}
 
+}]);
+
+invoice.controller('toastCtrl', [ '$scope', '$mdToast', function($scope, $mdToast) {
+	$scope.closeToast = function() {
+    	$mdToast.hide();
+	};
 }]);
