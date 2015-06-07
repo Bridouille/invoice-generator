@@ -1,9 +1,10 @@
 'use sctrict';
 
-var invoice = angular.module('invoice', [ 'ngMaterial', 'ngCookies' ]);
+var invoice = angular.module('invoice', [ 'ngMaterial', 'ngCookies', 'ngClipboard']);
 
-invoice.config([ '$mdThemingProvider', function ($mdThemingProvider) {
+invoice.config([ '$mdThemingProvider', 'ngClipProvider', function ($mdThemingProvider, ngClipProvider) {
 	$mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('deep-orange');
+	ngClipProvider.setPath("//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.swf");
 }]);
 
 invoice.filter('siret', function () {
@@ -107,7 +108,16 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', '$mdToast', function (
 
 		$mdToast.show({
 			controller: 'toastCtrl',
-			templateUrl: 'templates/toast-template.html',
+			templateUrl: 'templates/toast-keep-template.html',
+			hideDelay: 7000,
+			position: 'bottom left'
+		});
+	};
+
+	$scope.informClip = function (copied) {
+		$mdToast.show({
+			controller: 'toastCtrl',
+			templateUrl: 'templates/toast-copy-template.html',
 			hideDelay: 7000,
 			position: 'bottom left'
 		});
