@@ -15,6 +15,10 @@ md-whiteframe {
 	margin-bottom: 20px;	
 }
 
+input[type=number] {
+	width: 100%;
+}
+
 md-input-container {
 	padding-bottom: 0px;
 }

@@ -60,7 +60,7 @@ invoice.directive('invoiceTotal', function () {
 invoice.controller('invoiceCtrl', [ '$scope', '$cookies', '$mdToast', function ($scope, $cookies, $mdToast) {
 
 	$scope.formatDate = function (date) {
-		return (date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear());
+		return (date.getDate() + ' ' + months[date.getMonth() - 1] + ' ' + date.getFullYear());
 	};
 
 	$scope.calcLine = function (newItem) {
