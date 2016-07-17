@@ -123,7 +123,7 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', '$mdToast', function (
 		});
 	};
 
-	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
+	var months = [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ];
 
 	$scope.items = [ ];
 	$scope.newItem = $scope.genNewItem();
@@ -144,9 +144,9 @@ invoice.controller('invoiceCtrl', [ '$scope', '$cookies', '$mdToast', function (
 		$scope.seller = {
 			name : 'Nicolas BRIDOUX',
 			siret : '81006118400018',
-			address : '43 Rue Denise',
+			address : '44 Cours de la Martinique',
 			city : 'Bordeaux',
-			zipcode : '33300',
+			zipcode : '33000',
 			country : 'france'
 		};
 	}
