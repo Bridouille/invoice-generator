@@ -1,7 +1,7 @@
 <div class="col-lg-4 col-lg-offset-8">
 	<p>Sous-total : <span class="pull-right">{{ subTotal }} {{ opt.devise }}</span></p>
 	<p>TVA : <span class="pull-right">{{ totalTva }} {{ opt.devise }}</span></p>
-	<p>Total général : <span class="pull-right general">{{ total }} {{ opt.devise }}</span></p>
-	<p>Total payé : <span class="pull-right">{{ opt.paid }} {{ opt.devise }}</span></p>
-	<p><strong><em>Total du : </em></strong><span class="pull-right">{{ round(total - opt.paid, 2) }} {{ opt.devise }}</span></p>
+	<p>Total TTC général : <span class="pull-right general">{{ total }} {{ opt.devise }}</span></p>
+	<p>Total TTC payé : <span class="pull-right">{{ opt.paid }} {{ opt.devise }}</span></p>
+	<p><strong><em>Total TTC du : </em></strong><span class="pull-right">{{ round(total - opt.paid, 2) }} {{ opt.devise }}</span></p>
 </div>
