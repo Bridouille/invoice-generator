@@ -66,3 +66,7 @@ div#item-list {
 .item-total {
 	min-width: 70px;
 }
+
+textarea {
+	margin-top: 35px;
+}
