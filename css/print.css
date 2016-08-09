@@ -40,3 +40,7 @@ invoice-total span.pull-right {
 #item-list tbody tr {
 	border-bottom: 2px solid #e1e1e1;
 }
+
+textarea {
+	border: none;
+}
